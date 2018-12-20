@@ -1,0 +1,32 @@
+Problem: generate the mirror tree of the original binary tree
+Inputs: original binary tree
+Outputs: the mirror image version of the original binary tree
+
+class Node
+{
+	String data;
+	Node left, right;
+
+	//constructor
+	Node(String item)
+	{ data = item;  left = right = null;}
+}// end class Node
+
+class BinaryTree
+{
+	Node root;
+
+	void mirror()
+	{ root = mirror(root);} // end void mirror
+
+	Node mirror(Node node)
+	{
+		if(node == null)
+			return node;
+		Node left = mirror(node.left);
+		Node right = mirror(node.right);
+		node.left = right;
+		node.right = left;
+		Ruturn node;
+	} // end mirror 
+} //end class BinaryTree

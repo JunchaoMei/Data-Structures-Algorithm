@@ -1,0 +1,15 @@
+Problem: Does G have a clique of size k? A clique is a subset of vertices such that every pair of vertices in the subset is joined by an edge.
+Inputs: (G, k) where G is an undirected graph and k an integer. 
+Outputs: true / false as appropriate.
+
+boolean verify (graph G, number k, V¡ã)
+{
+	if (|V¡ã|>k)
+	{
+	    if (every pair of vertices u,v¡ÊV¡ã, edge (u,v) is in E)
+		return true;
+	    else
+		return false
+	} else
+	    return false;
+}//end verify

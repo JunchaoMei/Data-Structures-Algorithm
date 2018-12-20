@@ -1,0 +1,22 @@
+Problem: takes as input the linked list constructed by the Mergesort4 algorithm (Algorithm 7.4) and stores the records in the contiguous array slots in nondecreasing order according to the values of their keys.
+Inputs: LL, the output linked-list of Algorithm 7.4, consisting of an element (the index of key) & a pointer (to the next node); originalArray[], the original unsorted array.
+Outputs: LinkedList_to_Array[], the sorted array.
+
+keytype[] LinkedList_to_Array (LinkedList LL, keytype[] originalArray)
+{
+	index a; //original array
+	keytype[] sortedArray;
+	index i = 0; //sorted array
+
+	current = LinkedList.start
+
+	while (current.next != null)
+	{
+		a = current.element;
+		sortedArray[i] = originalArray[a];
+		current = current.next;
+		i++;
+	}//end whie loop
+
+	return sortedArray;
+}//end LinkedList_to_Array

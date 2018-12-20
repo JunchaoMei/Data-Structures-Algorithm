@@ -1,0 +1,110 @@
+/*
+Junchao Mei		Assignment 2
+Decimal Number Recognition		pseudocode
+*/
+Problem: recognize decimal numbers
+Inputs: String inputString
+Outputs:
+	(a) whether the string is a decimal number or not
+	(b) if it is a decimal number, whether the number is positive, negative, or zero
+	(c) the number of digits and what they are before and after the decimal point. Convert the string into the number it represents (float)
+//array index: 0-based
+
+//find the index of first ¡°non-zero¡± digit
+number indexOfFirstNonZeroDigit (String inputString)
+{	
+	number n = length of inputString;
+	if (inputString not contains any digit character from '1' to '9')
+		return n-1;
+	else
+	{
+		loop (i from 0 to n-1)
+		{
+			if (inputString[i] is non-zero digit character)
+				return i;
+		}//end loop
+	}//end else
+}//end indexOfFirstNonZeroDigit
+
+//find the index of last ¡°non-zero¡± digit
+number indexOfLastNonZeroDigit (String inputString)
+{
+	number n = length of inputString;
+	if (inputString not contains any digit character from '1' to '9')
+		return -1;
+	else
+	{
+		loop (i from n-1 to 0)
+		{
+			if (inputString[i] is non-zero digit character)
+				return i;
+		}//end loop
+	}//end else
+}//end indexOfLastNonZeroDigit
+
+//determine whether it¡¯s positive, negative or zero
+String getSign (String inputString)
+{
+	if (inputString not contains any digit character from '1' to '9')
+		return "zero";
+	else if (inputString[0] equals '-')
+		return "negative decimal number";
+	else
+		return "positive decimal number";
+}//end getSign
+
+//determine whether the input is a decimal number
+bool isDecimal (String inputString)
+{	//set of legal input characters
+	char legalCharSet[] = {'0','1','2','3','4','5','6','7','8','9','.','+','-'}
+	//Get the occurrence numbers of character ¡®+¡¯, ¡®-¡¯ and ¡®.¡¯
+	int occurPlus = occurrence numbers of character '+';
+	int occurMinus = occurrence numbers of character '-';
+	int occurPoint = occurrence numbers of character '.';
+
+	//rule out inputString containing illegal input characters
+	if (inputString contains illegal characters)
+		return false;
+	//rule out inputString without any digit
+	else if (inputString does not contain any digit character '0' ~ '9')
+		return false;
+	//rule out inputString containing multiple ¡®+¡¯, ¡®-¡¯ and ¡®.¡¯
+	else if (occurPlus>1 or occurMinus>1 or occurPoint>1)
+		return false;
+	//rule out inputString containing both ¡®+¡¯ and ¡®-¡¯
+	else if (occurPlus+occurMinus>1)
+		return false;
+	//rule out inputString if ¡®+¡¯ or ¡®-¡¯ is not at the beginning
+	else if ('+' or '-' is not at the beginning)
+		return false;
+	else
+		return true;
+}//end isDecimal
+
+//normalize the format of inputDecimalString
+String decimalNormalize(String inputDecimalString)
+{	//if it does not start with ¡®+¡¯ or ¡®-¡¯, then add ¡®+¡¯ at the beginning
+	if (inputDecimalString[0] not equals '+' or '-')
+		decimalString = "+" + inputDecimalString;
+	String Sign = getSign(decimalString);
+	//if there is no ¡®.¡¯, then add ¡®.¡¯ at the end
+	if (decimalString does not contain '.')
+		decimalString += '.';
+	//if there is no character between Sign and ¡®.¡¯, insert ¡®0¡¯
+	if (index('.') equals 1)
+		insert '0' into decimalString between Sign & '.';
+	//create substrings
+	String beforeDecimal = substring of decimalString from Sign( to )decimal; //(Sign, decimal)
+	String afterDecimal = substring of decimalString from decimal( to the end]; //(decimal, the end]
+	index fisrtNonZero = indexOfFirstNonZeroDigit(beforeDecimal);
+	index lastNonZero = indexOfLastNonZeroDigit(afterDecimal);
+	//if index(first non-zero digit)¡Ù0, delete charAt index 0~[index(first non-zero digit)-1]
+	if (fisrtNonZero does not equal 0)
+		delete substring indexed 0 ~ fisrtNonZero-1 from beforeDecimal;
+	//if index(last non-zero digit))¡Ùlast, delete charAt index [index(last non-zero digit))+1]~last
+	if (lastNonZero does not equal last)
+		delete substring indexed lastNonZero+1 ~ last from afterDecimal;
+	//combine substrings
+	String outputString = Sign + beforeDecimal + '.' + afterDecimal;
+	return outputString;
+}//end decimalNormalize

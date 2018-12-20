@@ -1,0 +1,50 @@
+Problem: Determine an optimal tour in a weighted, directed graph. The weights are nonnegative numbers.
+Inputs: a weighted, directed graph, and n, the number of vertices in the graph. The graph is represented by a two-dimensional array W, which has both its rows and columns indexed from 1 to n, where W [i] [j] is the weight on the edge from ith vertex to the jth vertex.
+Outputs: a variable minlength, whose value is the length of an optimal tour; and a one-dimensional array A[] which represents the intermediate vertices of the shortest tour.
+
+void travel_brute_force (int n, const number W[][], index A[], number& minlength)
+{
+	index i, j, k;
+	number length;
+	minlength = ¡Þ;
+
+	for (int x=1; x<=(n-1)!; x++)
+	{
+		length = ¡Þ;
+		number a[] = empty;
+		
+		find_path(n, a[], W[][], length);
+
+		number last_vertex = the last non-zero value in a[];
+		length = length + W[last_vertex][1];
+
+		if (length < minlength)
+		{
+			minlength = length;
+			copy a[] as A[];
+		}//end if
+	}//end for loop i
+}//end travel_brute-force
+
+void find_path (int n, number a[], number W[][], number length)//n = indices remained +1
+{
+	//end condition
+	if (n==1)
+		return;
+
+	for (each i not in a[] && i>=2)
+	{
+		index m = index of the last non-zero value in a[];
+		if (m>=0) // after adding
+			j = a[m];
+		else //before adding
+			j = -1;
+		
+		add i into a[];
+
+		if (j != -1)
+			length = length + W[j][i];
+
+		find_path (n-1, a[], W[][], length);//recursive call
+	}//end for loop i
+}//end find_path

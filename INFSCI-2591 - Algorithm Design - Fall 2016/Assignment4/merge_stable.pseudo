@@ -1,0 +1,49 @@
+Problem: Merge the two sorted subarray of S created in mergesort2, preserving the original order of equal keys.
+Inputs: indices low, mid & high, and the subarray of S indexed from low to high. The keys in array slots from low to mid are already sorted in nondecreasing ordre, as are the keys in array slots from (mid+1) to high.
+Outputs: the subarray of S indexed from low to high containing the keys in nondecreasing order, preserving the original order of equal keys.
+
+void merge2_stable (index low, index mid, index high)
+{
+	index i, j,k,l;
+	keytype U[low...high];
+	i = low;
+
+	for (j=mid+1, k=i; i<=mid && j<=high; k++)
+	{
+		if (S[i] <= S[j])
+			U[k] = S[i++];
+		else
+			U[k] = S[j++];
+	}//end for loop
+
+	if (i<=mid)
+	{
+		for (l=0; l<mid-i; l++)
+			U[k+1] = S[i+1];
+	}//end if i
+
+	if (j<=high)
+	{
+		for (l=0; l<=high-j; l++)
+			U[k+1] = S[j+1];
+	}//end if j
+}//end merge2_stable
+
+
+
+Problem: Sort n keys in nondecreasing sequence.
+Inputs: positive integer n, array of keys S indexed from 1 to n.
+Outputs: the array S containing the keys in nondecreasing order.
+
+void mergesort2 (index low, index high)
+{
+	index mid;
+
+	if (low<high)
+	{
+		mid = [(low+high)/2];
+		mergesort2(low, mid);
+		mergesort2(mid+1, high);
+		merge2_stable(low, mid, high);
+	}//end if
+}//end mergesort2

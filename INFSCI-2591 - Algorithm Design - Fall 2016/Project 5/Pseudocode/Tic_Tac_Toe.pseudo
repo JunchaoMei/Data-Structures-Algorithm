@@ -1,0 +1,106 @@
+Problem: develop a game of 3D Tic-Tac-Toe within 4*4*4 board
+Inputs: coordinates of each steps of player [X]
+Outputs: coordinates of each steps of program [O]
+
+void tic-tac-toe_3D (number[][][] currentBoard, node[][] winningPositions, char starter)
+{
+	//1st round (X+O)
+	if (starter=='X')
+	{
+		print "Please input your first step:";
+		write the input into currentBoard;
+	}//end if
+	singleStep(currentBoard, winningPositions);
+
+	//rest of rounds
+	while (board is NOT fully occupied && longestStrandX!=4 && longestStrandO!=4)
+	{
+		//X
+		print "Please input your next step:";
+		write the input into currentBoard;
+		//O
+		singleStep(currentBoard, winningPositions);
+	}//end while
+
+	//tie
+	if (board is fully occupied)
+		print "Tie !"
+}//end tic-tac-toe_3D
+
+void singleStep (number[][][] currentBoard, node[][] winningPositions)
+{
+	char program = 'O';
+	char user = 'X';
+	number longestStrandO, longestStrandX;
+	index wProO, wProX;
+
+	checkLink(currentBoard, winningPositions, program, longestStrandO, wProO);
+	checkLink(currentBoard, winningPositions, user, longestStrandX, wProX);
+
+	if (longestStrandX==0 && longestStrandO==0)
+		currentBoard[2][2][2] = -1;
+	else if (longestStrandX==1 && longestStrandO==0)
+		randomly pick an unoccupied position;
+	else if (longestStrandX==4 && longestStrandO<=3)
+		print "You Win !";
+	else if (longestStrandX<=3 && longestStrandO==4)
+		print "You lose !";
+	else if (longestStrandX==3 && longestStrandO<=2)
+		block user's;
+	else if (longestStrandX==3 && longestStrandO==3)
+	{
+		if (wProO is occupied)
+			block user's;
+		else //wProO is NOT occupied
+			extend wProO;
+	} else if (longestStrandX<=2 && longestStrandO<=3)
+		extend wProO;
+	else
+		randomly pick an unoccupied position;
+}//end singleStep
+
+void checkLink (/*inputs*/number[][][] currentBoard, node[][] winningPositions, char player, /*outputs*/number longestStrand, index wPro)
+{
+	/*wPro - the promising winning position which is not blocked*/
+	index w; //the w-th winning position
+	index v; //the v-th node in a certain winning position
+
+	for (w=1; w<=76; w++)
+	{
+		number length=0;
+
+		if (winningPositions[w] is not blocked)
+		{
+			for (v=1; v<=4; v++)
+			{
+				if (containNode(currentBoard, winningPositions[w][v], player))
+					length++;
+			}//end for loop v
+		}//end if
+
+		if (longestStrand < length)
+		{
+			longesetStrand = length;
+			wPro = w;
+		}//end if
+	}//end for loop w
+}//end checkLink
+
+bool containNode (number[][][] currentBoard, node currentNode, char player)
+{
+	if (player=='X')
+	{
+		if (currentBoard[currentNode.x][currentNode.y][currentNode.z] == 1)
+			return true;
+		return false;
+	} else if (player=='O')
+	{
+		if (currentBoard[currentNode.x][currentNode.y][currentNode.z] == -1)
+			return true;
+		return false;
+	} else
+	{
+		print "illegal input of player !";
+		return false;
+	}//end else
+}//end containNode

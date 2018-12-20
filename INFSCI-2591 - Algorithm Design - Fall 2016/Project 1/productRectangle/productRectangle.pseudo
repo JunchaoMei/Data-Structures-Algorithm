@@ -1,0 +1,113 @@
+/*
+Junchao Mei		Project 1
+Rectangle Multiplication Method		pseudocode
+*/
+Problem: Multiply a by b, both a & b are integers.
+Inputs: String a, b.
+Outputs: product, the product of a & b using Rectangle Multiplication Method.
+
+//both String a & b start with '+' ,'-' or '0'
+String productRectangle (String a, String b)
+{
+	transform String a into int A[] and char aSign; //index h from 0 to (m-1)
+	int m = length of A[];//remove sign
+	transform String b into int B[] and char bSign; //index k from 0 to (n-1)
+	int n = length of B[];//remove sign
+
+	const number P1[0...m-1]; //index i from 0 to (m-1)
+	const number P2[0...n-1]; //index j from 0 to (n-1)
+	String product='"";
+	char[] P;
+
+	if (aSign or bSign equals '0')
+		product += "0";
+	else
+	{
+		//lower half triangle
+		index i;
+		for (i=0; i<=(m-1); i++)
+		{
+			int h=m-i-1, k=n-1;
+			bool digitFlag = false; //unit digit
+
+			while (h<=m-1 && k>=0)
+			{
+				if (digitFlag == false)
+				{
+					P1[i] = P1[i]+unitDigit(A[h], B[k]);
+					h++;
+				} else
+				{
+					P1[i] = P1[i]+tensDigit(A[h], B[k]);
+					k--;
+				}//end else
+
+				digitFlag = !digitFlag;
+			}//end while
+		}//end for
+
+		//upper half triangle
+		index j
+		for (int j=0; j<=(n-1); j++)
+		{
+			int h=0, k=n-j-1;
+			boolean digitFlag = true; //tens digit
+
+			while (h<=m-1 && k>=0)
+			{
+				if (digitFlag == true)
+				{
+					P2[j] = P2[j]+tensDigit(A[h], B[k]);
+					k--;
+				} else
+				{
+					P2[j] = P2[j]+unitDigit(A[h], B[k]);
+					h++;
+				}//end else
+
+				digitFlag = !digitFlag;
+			}//end while
+		}//end for
+
+		combine P1[] & P2[] into P[0...m+n-1]; //index p from 0 to (m+n-1)
+
+		//determine sign
+		if (aSign equals '+')
+		{
+			if (bSign equals '+')
+				product += "+";
+			else
+				product += "-";
+		} else
+		{
+			if (bSign equals '+')
+				product += "-";
+			else
+				product += "+";
+		}//end else
+		reverse & rearrange P[] until all P[p] are single-digit numbers;
+		remove possible pre-positioned '0's;
+		product = Combine sign and P[];
+	}//end else
+	return product;
+}//end productRectangle
+
+number tensDigit (number x, number y)
+{
+	return x*y/10;
+}//end tensDigit
+
+number unitDigit (number x, number y)
+{
+	return (x*y)%10;
+}//end unitDigit
+
+String changeIntToString(number[] arr)
+{
+	if(arr equals null)
+		return null;
+	String result ="";
+	for(int i =0;i<arr.length;i++)
+		result += arr[i]+"";
+	return result;
+}

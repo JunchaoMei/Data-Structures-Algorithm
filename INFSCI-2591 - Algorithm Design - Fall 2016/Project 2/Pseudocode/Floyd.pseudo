@@ -1,0 +1,41 @@
+Problem: Compute the shortest paths from each vertex in a weighted graph to each of the other
+vertices. The weights are nonnegative numbers. Shortest paths are also created.
+Inputs: A weighted, directed graph and n, the number of vertices in the graph. The graph is
+represented by a two-dimensional array W, which has both its rows and columns indexed from 1 to n,
+where W [i] [j] is the weight on the edge from the ith vertex to the jth vertex.
+Outputs: A two-dimensional array D, which has both its rows and columns indexed from 1 to n,
+where D [i] [j] is the length of a shortest path from the ith vertex to the jth vertex.
+An array P, which has both its rows and columns indexed from 1 to n
+
+void floyd (const number W[][], number D[][], index P[][])
+{
+	int i,j,k,n;
+	n = W.length-1;
+		//initialize P[][]
+	for (i=1; i<=n; i++)
+	{
+		for (j=1; j<=n; j++)
+		{
+			P[i][j] = 0;
+		}//end loop j
+	}//end loop i
+
+	//initialize D using 2D_Array
+	D = W;
+
+	//D(k)[i][j] = D(k-1)[i][k] + D(k-1)[k][j]
+	for (k=1; k<=n; k++)
+	{
+		for (i=1; i<=n; i++)
+		{
+			for (j=1; j<=n; j++)
+			{
+				if (D[i][k] + D[k][j] < D[i][j])
+				{
+					P[i][j] = k;
+					D[i][j] = D[i][k] + D[k][j];
+				}//end if
+			}//end loop j
+		}//end loop i
+	}//end loop k
+}//end floyd

@@ -1,0 +1,43 @@
+Problem: Position n queens in a cube so that no two are in the same x, y, z planes or diagonal line.
+Inputs: positive integer n.
+Outputs: all possible ways n queens can be placed in an n¡Án¡Án cube so that no two queens threaten each other. Each output consists of an array of integers Z indexed from 1 to n, where Z[i][j] is the where the queen in the line (x=i & y=j) is placed.
+
+[Analysis]
+check same z plane: Z[i][j] = Z[a][b]; (a¡Ùi, b¡Ùj)
+check same diagonal line: abs(Z[i][j]-Z[a][b]) = i-a = j-b
+
+void queens_cubic (index i, index j)
+{
+	index k;
+
+	if (promising(i,j))
+		if (i==n && j==n)
+			cout << Z[1][1] through Z[n][n];
+		else
+			for (k=1; k<=n; k++)
+			{
+				Z[i+1][j+1] = k;
+				queens_cubic (i+1, j+1);
+			}//end for loop
+}//end quees_cubic
+
+bool promising(index i, index j)
+{
+	index a, b;
+	bool switch;
+
+	a=b=1;
+	switch = true;
+
+	while (k<i && switch)
+	{
+		while (k<j && switch)
+		{
+			if (Z[i][j] == Z[a][b] || abs(Z[i][j]-Z[a][b]) == i-a || i-a == j-b)
+				switch = false;
+			a++;
+			b++;
+		}//end inner while
+	}//end outer while
+	return switch;
+}//end promising

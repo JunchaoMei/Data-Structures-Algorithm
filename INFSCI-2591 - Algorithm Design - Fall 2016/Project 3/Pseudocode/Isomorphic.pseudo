@@ -1,0 +1,77 @@
+Problem: Identify whether graph G1 & G2 are isomorphic.
+Inputs: 2 undirected simple graphs G1[][] & G2[][]; A[][], the Arrangements Matrix; p, the permutation number of (n, n).
+Outputs: bool value, true if G1 & G2 are isomorphic; false if G1 & G2 are not isomorphic.
+
+bool isIsomorphic (number[][] G1, number[][] G2, number[][] A, number p)
+{
+	index k;
+
+	for (k=1; k<p; k++) //G1 is A[0]
+	{
+		//generate Adjacency Matrix with version of k
+		number[][] Gk = isomorphor(G1, A, k);
+		//whether Gk & G2 are equivalent
+		if (Gk & G2 are equivalent)
+		{
+			//print G1 vertices
+			cout << A[0] ;
+			//print G2 vertices
+			cout << A[k];
+			return true;
+		}//end if
+	}//end for loop k
+	return false;
+}//end isIsomorphic
+
+//use Backtracking Algorithm to generate all possible arrangements of vertices, store those arrangements into A[][]
+void vertexArrange (number[] a, index start, index end, number[][] A)
+{
+	//n = number of nodes
+	number n = (length of A[0])-1;
+
+	index x, i;
+	//end generating one row, store it into A[x]
+        if (start >= end)
+	{
+		for (i=1; i<=n; i++)
+		A[x][i] = a[i-1];
+		x++;
+		return;
+        }//end if
+
+	//generating one row using Backtracking
+        for (i = start; i <= end; i++)
+	{
+            number temp = a[start];
+            a[start] = a[i];
+            a[i] = temp;
+	    //recursive design
+            vertexArrange(a, start + 1, end, A);
+            temp = a[start];
+            a[start] = a[i];
+            a[i] = temp;
+        }//end for loop
+}//end vertexArrange
+
+//generate Isomophor Adjacency Matrix with version of k
+//The Arrangements Matrix is A
+number[][] isomorphor (number[][] G1, number[][] A, index k)
+{
+	number n = (length of G1)-1;
+	number G[1..n][1..n];
+	index i, j;
+
+	for (i=1; i<=n; i++)
+	{
+		for (j=1; j<=n; j++)
+		{
+			if (j!=i)
+			{
+				index a = A[k][i];
+				index b = A[k][j];
+				G[a][b] = G1[i][j];
+			}//end if
+		}//end for loop j
+	}//end for loop i
+	return G;
+}//end isomorphor

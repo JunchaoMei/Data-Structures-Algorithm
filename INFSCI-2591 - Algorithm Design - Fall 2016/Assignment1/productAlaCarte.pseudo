@@ -1,0 +1,36 @@
+/*
+Junchao Mei		Assignment 1
+ala carte multiplication method		pseudocode
+*/
+Problem: Multiply a by b, both a & b are large integers.
+Inputs: String a, b.
+Outputs: product, the product of a & b using Ala Carte Multiplication Method.
+
+number productAlaCarte (String a, String b)
+{
+	transform String a into number a0;
+	transform String b into number b0;
+
+	index i;
+	number product=1;
+	int n=log2(a0)+1;
+	const number A[0...n-1]; //indexed from 0 to (n-1)
+	const number B[0...n-1]; //indexed from 0 to (n-1)
+
+	for (i=0; i<=(n-1); i++)
+	{
+		if (i==0)
+		{
+			A[i]=a0;
+			B[i]=b0;
+		} else
+		{
+			A[i] = A[i-1]/2;
+			B[i] = B[i-1]*2;
+		}//end else
+
+		if (A[i]%2==1)
+			product += B[i];
+	}//end for
+	return product;
+}

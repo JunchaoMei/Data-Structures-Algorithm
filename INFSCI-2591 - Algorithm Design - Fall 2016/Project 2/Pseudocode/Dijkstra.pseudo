@@ -1,0 +1,49 @@
+Problem: Determine the shortest paths from v1 to all other vertices in a weighted, directed graph.
+Inputs: integer n ¡Ý 2, and a connected, weighted, directed graph containing n vertices. The graph is
+represented by a two-dimensional array W, which has both its rows and columns indexed from 1 to n,
+where W [i] [j] is the weight on the edge from the ith vertex to the jth vertex.
+Outputs: set of edges F containing edges in shortest paths.
+
+//input W, compute F which contains edges staring from v-k
+void dijkstra (const number[][] W, Edge[] F, int k)
+{
+	int n = W.length-1;
+	index i, p=0, vnear=0;//p is the index of F[]
+	Edge e;
+	index touch = [2..n];
+	number length = [2..n];
+
+	F = ¡Ñ;//empty
+	for (i=1; i<=n; i++)
+	{
+		if (i!=k)
+		{
+			touch[i] = k;
+			length[i] = W[k][i];
+		}
+	}//end for loop
+		repeat (n-1 times)
+	{
+		int min = ¡Þ;
+		for (i=1; i<=n; i++)
+		{
+			if (i!=k && 0<=length[i]<min)
+			{
+				min = length[i];
+				vnear = i;
+			}//end if
+		}//end foor loop i
+		
+		e = edge from v-touch[vnear] to v-vnear;
+		F[p++] = e;//add e to F
+			for (i=1; i<=n; i++)
+		{
+			if (i!=k && length[vnear]+W[vnear][i] < length[i])
+			{
+				length[i] = length[vnear] + W[vnear][i];
+				touch[i] = vnear;
+			}//end if
+		}//end foor loop i
+		length[vnear] = -1;
+	}//end repeat
+}//end dijkstra

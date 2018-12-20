@@ -1,0 +1,22 @@
+Problem: determine whether two binary trees are mirror images
+Inputs: two binary trees
+Outputs: bool value, true / false to "Mirror Image"
+
+class TreeNode
+{
+	String data;
+	TreeNode left, right;
+
+	//constructor
+	TreeNode(String item)
+	{ data = item;  left = right = null;}
+} // end class TreeNode
+
+bool isMirror(TreeNode a, TreeNode b)
+{
+	if(a == null && b == null)
+		return true;
+	if(a == null || b==null)
+		return false;
+	return ((a.data == b.data) && (isMirror(a.left, b.right)) && (isMirror(a.right, b.left)));
+} // end isMirror

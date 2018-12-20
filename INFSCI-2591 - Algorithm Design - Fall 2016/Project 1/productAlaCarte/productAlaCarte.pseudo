@@ -1,0 +1,105 @@
+/*
+Junchao Mei		Project 1
+Ala Carte Multiplication Method		pseudocode
+*/
+Problem: Multiply a by b, both a & b are integers.
+Inputs: String a, b.
+Outputs: product, the product of a & b using Ala Carte Multiplication Method.
+
+String productAlaCarte (String x, String y)//both String x & y start with '+' ,'-' or '0'
+{
+	String product="";
+
+	transform String x into int[] aInt and char aSign;
+	transform String y into int[] bInt and char bSign;
+
+	String[] A;//divide by 2
+	String[] B;//multiply by 2
+
+	if (a[0] or b[0] equals '0')
+		return "0";
+	else
+	{
+		//determine sign
+		if (a[0] equals '+')
+		{
+			if (b[0] equals '+')
+				product += "+";
+			else
+				product += "-";
+		} else
+		{
+			if (b[0] equals '+')
+				product += "-";
+			else
+				product += "+";
+		}//end else
+
+		index i;
+		for (i=0; i<=(n-1); i++)
+		{
+			if (i equals 0)
+			{
+				A[i]=x;//without sign
+				B[i]=y;//without sign
+			} else
+			{
+				A[i] = quotient_2(A[i-1]);
+				B[i] = sum(B[i-1],B[i-1]);//x+x=2x
+			}//end else
+
+			if (A[i] is odd number)
+				product = sum(B[i], product);//String addition
+		}//end for
+	}//end else
+	return product;
+}//end productAlaCarte
+
+//algorithm for addition between large positive integers
+String sum (String f, String s)
+{
+	reverse String f, and transform it into char[] a;
+	reverse String s, and transform it into char[] b;
+	
+	//largest possible digit number is the (longer length of a & b) + 1
+	number result[] = new number [(longer length of a & b) + 1];
+	
+	index i;
+	for (i = 0; i < length(result); i++)
+	{	//bit addition
+		substitute vacant high-order digits with '0's for shorter length char array;
+		result[i] = a[i]+b[i];
+		
+		//carry bits
+		if (result[i] > 10)
+		{
+			result[i + 1] += result[i] / 10;
+			result[i] %= 10;
+		}//end if
+        }//end for
+
+	reverse result[];
+	remove possible pre-positioned '0's;
+	transform result[] into String sumValue;
+	return sumValue;
+}//end sum
+
+//algorithm for divide a large positive integer by 2
+String quotient_2 (String m)
+{
+	transform String m into int[] mInt;
+	number result[] = new number[mInt.length];
+	number reminder[] = new number[mInt.length];
+
+	for (i=0; i<mInt.length; i++)
+	{
+		result[i] = mInt[i]/2;
+		reminder[i] = mInt[i]%2;
+		if (i<mInt.length-1)
+			mInt[i+1] += 10*reminder[i];
+	}//end for
+
+	remove possible pre-positioned '0's;
+	transform result[] into String quotientValue;
+	return quotientValue;
+}//end quotient_2

@@ -1,0 +1,80 @@
+/*
+Junchao Mei		Assignment 1
+rectangle multiplication method		pseudocode
+*/
+Problem: Multiply a by b, both a & b are large integers.
+Inputs: String a, b.
+Outputs: product, the product of a & b using Rectangle Multiplication Method.
+
+number productRectangle (String a, String b)
+{
+	transform String a into int array A[]; //index h from 0 to (m-1)
+	int m = length of A[];
+	transform String b into int array B[]; //index k from 0 to (n-1)
+	int n = length of B[];
+
+	const number P1[0...m-1]; //index i from 0 to (m-1)
+	const number P2[0...n-1]; //index j from 0 to (n-1)
+	number product;
+	
+	//lower half triangle
+	for (int i=0; i<=(m-1); i++)
+	{
+		int h=m-i-1, k=n-1;
+		boolean digitFlag = false; //unit digit
+
+		while (h<=m-1 && k>=0)
+		{
+			if (digitFlag == false)
+			{
+				P1[i] = P1[i]+unitDigit(A[h], B[k]);
+				h++;
+			} else
+			{
+				P1[i] = P1[i]+tensDigit(A[h], B[k]);
+				k--;
+			}//end else
+
+			digitFlag = !digitFlag;
+		}//end while
+	}//end for
+
+	//upper half triangle
+	for (int j=0; j<=(n-1); j++)
+	{
+		int h=0, k=n-j-1;
+		boolean digitFlag = true; //tens digit
+
+		while (h<=m-1 && k>=0)
+		{
+			if (digitFlag == true)
+			{
+				P2[j] = P2[j]+tensDigit(A[h], B[k]);
+				k--;
+			} else
+			{
+				P2[j] = P2[j]+unitDigit(A[h], B[k]);
+				h++;
+			}//end else
+
+			digitFlag = !digitFlag;
+		}//end while
+	}//end for
+
+	combine P1[] & P2[] into P[0...m+n-1]; //index p from 0 to (m+n-1)
+
+	for (int p=0; p<=(m+n-1); p++)
+		product = product+P[p]^p;
+
+	return product;
+}//end productRectangle
+
+number tensDigit (number x, number y)
+{
+	return x*y/10;
+}//end tensDigit
+
+number unitDigit (number x, number y)
+{
+	return (x*y)%10;
+}//end unitDigit

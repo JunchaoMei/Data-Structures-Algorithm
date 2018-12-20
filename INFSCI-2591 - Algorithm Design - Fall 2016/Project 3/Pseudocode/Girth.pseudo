@@ -1,0 +1,82 @@
+Problem: find the girth (length of the shortest cycle) of a graph G
+Inputs: undirected simple graph G, which is represented by AdjacencyMatrix[1..n][1..n]
+Outputs: girth, the length of  the shortest cycle, of G
+
+void BFS_grith()
+{
+	(Queue of Node) Q;
+	Node u, v, root;
+	girth=300000;
+	//Time Complexity: O(1)
+
+	//create Node root (level-0)
+	//Node(vertex, parent, level)
+	root = Node(0,-1,0);
+	v = root;
+	girth = visit(v,girth);
+	enqueue(Q, v);
+	//Time Complexity: O(1)
+		
+	//create Nodes (level-1)
+	index i;
+	for (i=1; i<=n; i++)
+	{
+		add child vertex i into v's children vertices;
+		add child Node(i,0,1) into v's children;
+	}//end for loop i
+	//Time Complexity: O(n)
+
+	while (!empty(Q) && girth==300000)
+	{	
+		//override Node v
+		v = first Node of Q;
+		number v_Level = level of v;
+		number v_Vertex = vertex of v;
+		number v_Parent = parent of v;
+
+		for (each child u of v)
+		{
+			number u_Level = level of u;
+			number u_Vertex = vertex of u;
+			number u_Parent = parent of u;
+
+			//create ancestors
+			add (v) & (ancestors of v) into u's ancestors;
+			for (each ancestor An of u)
+				add vertex of An into u's ancestors vertices;
+			//Time Complexity: O(n*m)
+
+			//create children
+			index j;
+			for (j=1; j<=n; j++)
+			{
+				number weight = AdjacencyMatrix[u_Vertex][j];
+				if (weight>0 && weight<300000 && j!=u_Parent)
+				{
+					add Node(j,u_Vertex,u_Level+1) into u's children;
+					add j into u'd children vertices;
+				}//end if
+			}//end for loop j
+			//Time Complexity: O(n*n)
+
+			girth = visit(u,girth);
+			enqueue(Q, u);
+			//Time Complexity: O(1)
+		}//end for loop
+		dequeue(Q);
+	}//end while
+}//end BFS_grith
+
+number visit(Node nod, int girth)
+{	
+	number cycle = cycleLength(nod);
+	return min(cycle, girth);
+}//end visit
+
+number cycleLength(Node nod)
+{
+	number result = 300000;
+	if (!empty(intersection between ancestors & children of nod))
+		result = (level of nod) - (level of corresponding ancestor) + 1;
+	return result;
+}//end cycleLength
